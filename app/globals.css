@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #111110;
+  --text: #e6e1d9;
+  --accent: #b9a88f;
+  --border: rgba(230, 225, 217, 0.18);
+  --text-muted: rgba(230, 225, 217, 0.6);
+  --content-width: 640px;
+  --base-font-size: 18px;
+  --line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@layer base {
+  body {
+    @apply font-body;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-title font-medium;
+    letter-spacing: 0.005em;
+  }
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--bg);
+}
+
+#theme-root {
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+  color: var(--text);
+  background: var(--bg);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.input-minimal {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: inherit;
+  padding: 6px 0;
+}
+
+.input-minimal:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+
+.template-minimal main {
+  padding-top: 48px;
+}
+
+.template-notebook main {
+  padding-top: 64px;
+}
+
+.template-typewriter main {
+  padding-top: 56px;
+}
+
+.template-typewriter .prose-content {
+  letter-spacing: calc(var(--letter-spacing) + 0.01em);
+}
+
+.template-typewriter .editor-content {
+  letter-spacing: calc(var(--letter-spacing) + 0.01em);
+}
+
+.template-notebook .prose-content {
+  padding-bottom: 24px;
+}
+
+.prose-content :where(h1, h2, h3, h4) {
+  line-height: 1.2;
+}
+
+.prose-content,
+.editor-content {
+  letter-spacing: var(--letter-spacing);
+}
+
+.prose-content > * + * {
+  margin-top: 1.2em;
+}
+
+.editor-content > * + * {
+  margin-top: 0.5em;
+}
+
+.prose-content h1 {
+  font-size: 1.7em;
+  margin-top: 1.6em;
+}
+
+.prose-content h2 {
+  font-size: 1.4em;
+  margin-top: 1.4em;
+}
+
+.prose-content h3 {
+  font-size: 1.2em;
+  margin-top: 1.2em;
+}
+
+.prose-content ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+
+.prose-content ol {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+
+.prose-content li + li {
+  margin-top: 0.4em;
+}
+
+.prose-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose-content iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.editor-content {
+  min-height: 55vh;
+  padding-top: 8px;
+  line-height: var(--line-height);
+}
+
+.editor-title {
+  font-size: calc(var(--base-font-size) * 1.6);
+  line-height: 1.2;
+}
+
+.editor-toolbar {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  gap: 8px;
+}
+
+.editor-button {
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: transparent;
+  padding: 6px 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+
+.editor-button:hover {
+  opacity: 1;
+}
+
+.editor-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.settings-panel {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.settings-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.setting-row {
+  display: grid;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .setting-row {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+.setting-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.segmented-button {
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.segmented-button[data-active="true"] {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-input {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0;
+}
