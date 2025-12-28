@@ -244,7 +244,11 @@ export default function Editor({
               return;
             }
             const src = normalizeVideoUrl(url);
-            editor.chain().focus().setVideo({ src }).run();
+            editor
+              .chain()
+              .focus()
+              .insertContent({ type: "videoEmbed", attrs: { src } })
+              .run();
           }}
         >
           Video
