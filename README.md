@@ -20,8 +20,11 @@ npm install
 npm run dev
 ```
 
+## Auth flow
+- First login: use the magic link to verify your email.
+- After that, set a password on the login page and use email + password for future logins.
+
 ## Notes
-- Login uses email magic links. First login creates the initial blog row automatically.
 - Public pages only show public posts. Private posts are visible only in `/dashboard`.
 - View counts are tracked for public posts but shown only in the dashboard.
 - Theme settings are stored in `blogs.theme_json` and applied to public pages and the editor.

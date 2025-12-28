@@ -1,10 +1,8 @@
 {
   "/page": "app/page.js",
-  "/dashboard/edit/[slug]/page": "app/dashboard/edit/[slug]/page.js",
-  "/dashboard/theme/page": "app/dashboard/theme/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/api/draft/route": "app/api/draft/route.js",
-  "/p/[slug]/page": "app/p/[slug]/page.js",
+  "/login/page": "app/login/page.js",
+  "/dashboard/theme/page": "app/dashboard/theme/page.js",
   "/dashboard/new/page": "app/dashboard/new/page.js",
-  "/api/theme/writing/route": "app/api/theme/writing/route.js"
+  "/p/[slug]/page": "app/p/[slug]/page.js"
 }
