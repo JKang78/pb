@@ -704,15 +704,15 @@ video {
 .gap-6 {
   gap: 1.5rem;
 }
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
 .space-y-10 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
-}
-.space-y-12 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(3rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(3rem * var(--tw-space-y-reverse));
 }
 .space-y-14 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
@@ -744,16 +744,14 @@ video {
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
-.space-y-1 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
 .border {
   border-width: 1px;
 }
 .border-b {
   border-bottom-width: 1px;
+}
+.border-\[color\:var\(--border\)\] {
+  border-color: var(--border);
 }
 .border-\[color\:var\(--text\)\] {
   border-color: var(--text);
@@ -773,9 +771,6 @@ video {
 .border-red-500 {
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
-}
-.border-\[color\:var\(--border\)\] {
-  border-color: var(--border);
 }
 .px-2 {
   padding-left: 0.5rem;
@@ -807,14 +802,14 @@ video {
 .pb-4 {
   padding-bottom: 1rem;
 }
-.pt-10 {
-  padding-top: 2.5rem;
-}
 .pb-5 {
   padding-bottom: 1.25rem;
 }
 .pb-6 {
   padding-bottom: 1.5rem;
+}
+.pt-10 {
+  padding-top: 2.5rem;
 }
 .font-body {
   font-family: var(--font-serif), Iowan Old Style, Charter, Georgia, serif;
@@ -934,7 +929,7 @@ video {
   --text-muted: rgba(230, 225, 217, 0.6);
   --content-width: 640px;
   --base-font-size: 18px;
-  --line-height: 1.5;
+  --line-height: 1.8;
 }
 
 * {
@@ -943,11 +938,6 @@ video {
 
 body {
   margin: 0;
-  color: var(--text);
-  background: var(--bg);
-}
-
-#theme-root {
   font-size: var(--base-font-size);
   line-height: var(--line-height);
   color: var(--text);
@@ -998,11 +988,7 @@ main {
 }
 
 .template-typewriter .prose-content {
-  letter-spacing: calc(var(--letter-spacing) + 0.01em);
-}
-
-.template-typewriter .editor-content {
-  letter-spacing: calc(var(--letter-spacing) + 0.01em);
+  letter-spacing: 0.01em;
 }
 
 .template-notebook .prose-content {
@@ -1013,17 +999,12 @@ main {
   line-height: 1.2;
 }
 
-.prose-content,
-.editor-content {
-  letter-spacing: var(--letter-spacing);
-}
-
 .prose-content > * + * {
   margin-top: 1.2em;
 }
 
 .editor-content > * + * {
-  margin-top: 0.5em;
+  margin-top: 0.9em;
 }
 
 .prose-content h1 {
@@ -1069,12 +1050,7 @@ main {
 .editor-content {
   min-height: 55vh;
   padding-top: 8px;
-  line-height: var(--line-height);
-}
-
-.editor-title {
-  font-size: calc(var(--base-font-size) * 1.6);
-  line-height: 1.2;
+  line-height: 1.6;
 }
 
 .editor-toolbar {
@@ -1100,74 +1076,6 @@ main {
 .editor-button[aria-pressed="true"] {
   border-color: var(--accent);
   opacity: 1;
-}
-
-.settings-panel {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.settings-grid {
-  display: grid;
-  gap: 14px;
-  margin-top: 16px;
-}
-
-.setting-row {
-  display: grid;
-  gap: 12px;
-  align-items: center;
-}
-
-@media (min-width: 768px) {
-  .setting-row {
-    grid-template-columns: 140px 1fr;
-  }
-}
-
-.setting-label {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.segmented {
-  display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.segmented-button {
-  padding: 6px 12px;
-  font-size: 12px;
-  color: var(--text-muted);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.segmented-button[data-active="true"] {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.color-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.color-input {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  padding: 0;
 }
 
 .last\:border-b-0:last-child {

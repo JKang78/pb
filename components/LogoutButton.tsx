@@ -2,7 +2,7 @@
 
 import { createSupabaseBrowserClient } from "../lib/supabaseClient";
 
-export default function LogoutButton() {
+export default function LogoutButton({ className = "text-xs text-muted" }: { className?: string }) {
   const supabase = createSupabaseBrowserClient();
 
   return (
@@ -12,7 +12,7 @@ export default function LogoutButton() {
         await supabase.auth.signOut();
         window.location.reload();
       }}
-      className="text-xs text-gray-500"
+      className={className}
     >
       Log out
     </button>

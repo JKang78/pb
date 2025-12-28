@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
 
 export default function Nav({
   blogTitle,
@@ -17,9 +18,12 @@ export default function Nav({
           About
         </Link>
         {isOwner ? (
-          <Link href="/dashboard" className="opacity-60 hover:opacity-100">
-            Dashboard
-          </Link>
+          <>
+            <Link href="/dashboard" className="opacity-60 hover:opacity-100">
+              Dashboard
+            </Link>
+            <LogoutButton className="text-[12px] opacity-60 hover:opacity-100" />
+          </>
         ) : (
           <Link href="/login" className="opacity-60 hover:opacity-100">
             Login

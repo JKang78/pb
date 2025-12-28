@@ -21,8 +21,9 @@ npm run dev
 ```
 
 ## Auth flow
-- First login: use the magic link to verify your email.
-- After that, set a password on the login page and use email + password for future logins.
+- Register at `/register` with email + password.
+- Verify your email once via the confirmation link.
+- Log in at `/login` with email + password going forward.
 
 ## Notes
 - Public pages only show public posts. Private posts are visible only in `/dashboard`.

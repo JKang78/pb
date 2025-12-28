@@ -79,23 +79,35 @@ export async function ensureOwnerBlog(ownerId: string) {
     return existing as Blog;
   }
 
-  const slug = process.env.BLOG_SLUG || "main";
-  const { data: created, error: insertError } = await supabase
-    .from("blogs")
-    .insert({
-      owner_user_id: ownerId,
-      title: "My Blog",
-      slug,
-      theme_json: defaultTheme
-    })
-    .select("*")
-    .single();
+  const baseSlug = process.env.BLOG_SLUG || "main";
+  const candidates = [
+    baseSlug,
+    `${baseSlug}-${ownerId.slice(0, 6)}`,
+    `${baseSlug}-${Math.random().toString(36).slice(2, 8)}`
+  ];
 
-  if (insertError) {
-    throw insertError;
+  for (const candidate of candidates) {
+    const { data: created, error: insertError } = await supabase
+      .from("blogs")
+      .insert({
+        owner_user_id: ownerId,
+        title: "My Blog",
+        slug: candidate,
+        theme_json: defaultTheme
+      })
+      .select("*")
+      .single();
+
+    if (!insertError) {
+      return created as Blog;
+    }
+
+    if (insertError.code !== "23505") {
+      throw insertError;
+    }
   }
 
-  return created as Blog;
+  throw new Error("Unable to create a unique blog slug.");
 }
 
 export async function getPublicBlog() {
