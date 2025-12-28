@@ -65,10 +65,30 @@ function slugify(input: string) {
 
 export async function ensureOwnerBlog(ownerId: string) {
   const supabase = createSupabaseServerClient();
+  const preferredSlug = process.env.BLOG_SLUG;
+  if (preferredSlug) {
+    const { data: slugMatch, error: slugError } = await supabase
+      .from("blogs")
+      .select("*")
+      .eq("owner_user_id", ownerId)
+      .eq("slug", preferredSlug)
+      .maybeSingle();
+
+    if (slugError) {
+      throw slugError;
+    }
+
+    if (slugMatch) {
+      return slugMatch as Blog;
+    }
+  }
+
   const { data: existing, error } = await supabase
     .from("blogs")
     .select("*")
     .eq("owner_user_id", ownerId)
+    .order("created_at", { ascending: true })
+    .limit(1)
     .maybeSingle();
 
   if (error) {

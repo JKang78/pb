@@ -929,7 +929,8 @@ video {
   --text-muted: rgba(230, 225, 217, 0.6);
   --content-width: 640px;
   --base-font-size: 18px;
-  --line-height: 1.8;
+  --line-height: 1.5;
+  --letter-spacing: 0em;
 }
 
 * {
@@ -938,6 +939,11 @@ video {
 
 body {
   margin: 0;
+  color: var(--text);
+  background: var(--bg);
+}
+
+#theme-root {
   font-size: var(--base-font-size);
   line-height: var(--line-height);
   color: var(--text);
@@ -988,7 +994,11 @@ main {
 }
 
 .template-typewriter .prose-content {
-  letter-spacing: 0.01em;
+  letter-spacing: calc(var(--letter-spacing) + 0.01em);
+}
+
+.template-typewriter .editor-content {
+  letter-spacing: calc(var(--letter-spacing) + 0.01em);
 }
 
 .template-notebook .prose-content {
@@ -999,12 +1009,17 @@ main {
   line-height: 1.2;
 }
 
+.prose-content,
+.editor-content {
+  letter-spacing: var(--letter-spacing);
+}
+
 .prose-content > * + * {
   margin-top: 1.2em;
 }
 
 .editor-content > * + * {
-  margin-top: 0.9em;
+  margin-top: 0.5em;
 }
 
 .prose-content h1 {
@@ -1050,7 +1065,12 @@ main {
 .editor-content {
   min-height: 55vh;
   padding-top: 8px;
-  line-height: 1.6;
+  line-height: var(--line-height);
+}
+
+.editor-title {
+  font-size: calc(var(--base-font-size) * 1.6);
+  line-height: 1.2;
 }
 
 .editor-toolbar {
@@ -1076,6 +1096,81 @@ main {
 .editor-button[aria-pressed="true"] {
   border-color: var(--accent);
   opacity: 1;
+}
+
+.settings-panel {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.setting-row {
+  display: grid;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .setting-row {
+    grid-template-columns: 140px minmax(0, 1fr);
+  }
+}
+
+.setting-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.segmented-button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.segmented-button[data-active="true"] {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-input {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  padding: 0;
+}
+
+.color-row .input-minimal {
+  min-width: 160px;
+  flex: 1;
 }
 
 .last\:border-b-0:last-child {
