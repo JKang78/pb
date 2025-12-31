@@ -45,6 +45,11 @@ export default async function DashboardPage() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3 text-xs">
+                {post.visibility === "public" && (
+                  <Link href={`/p/${post.slug}`} className="border border-[color:var(--text)] px-3 py-1">
+                    View
+                  </Link>
+                )}
                 <Link href={`/dashboard/edit/${post.slug}`} className="border border-[color:var(--text)] px-3 py-1">
                   Edit
                 </Link>

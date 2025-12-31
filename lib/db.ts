@@ -133,11 +133,69 @@ export async function ensureOwnerBlog(ownerId: string) {
 export async function getPublicBlog() {
   const slug = process.env.BLOG_SLUG;
   const supabase = createSupabaseServiceClient();
-  let query = supabase.from("blogs").select("*");
   if (slug) {
-    query = query.eq("slug", slug);
+    const { data: bySlug, error: slugError } = await supabase
+      .from("blogs")
+      .select("*")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (slugError) {
+      throw slugError;
+    }
+
+    if (bySlug) {
+      const { count, error: countError } = await supabase
+        .from("posts")
+        .select("id", { count: "exact", head: true })
+        .eq("blog_id", bySlug.id)
+        .eq("visibility", "public");
+
+      if (countError) {
+        throw countError;
+      }
+
+      if ((count ?? 0) > 0) {
+        return bySlug as Blog;
+      }
+    }
   }
-  const { data, error } = await query.order("created_at", { ascending: true }).limit(1).maybeSingle();
+
+  const { data: latestPost, error: postError } = await supabase
+    .from("posts")
+    .select("blog_id, published_at, created_at")
+    .eq("visibility", "public")
+    .order("published_at", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (postError) {
+    throw postError;
+  }
+
+  if (latestPost?.blog_id) {
+    const { data: blogByPost, error: blogError } = await supabase
+      .from("blogs")
+      .select("*")
+      .eq("id", latestPost.blog_id)
+      .maybeSingle();
+
+    if (blogError) {
+      throw blogError;
+    }
+
+    if (blogByPost) {
+      return blogByPost as Blog;
+    }
+  }
+
+  const { data, error } = await supabase
+    .from("blogs")
+    .select("*")
+    .order("created_at", { ascending: true })
+    .limit(1)
+    .maybeSingle();
   if (error) {
     throw error;
   }

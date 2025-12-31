@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getPublicBlog, getPublicPosts } from "../lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const blog = await getPublicBlog();
 
