@@ -1,7 +1,19 @@
 {
-  "/page": "app/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/draft/route": "app/api/draft/route.js",
+  "/api/media/route": "app/api/media/route.js",
+  "/api/upload/route": "app/api/upload/route.js",
+  "/api/theme/writing/route": "app/api/theme/writing/route.js",
+  "/auth/callback/route": "app/auth/callback/route.js",
   "/about/page": "app/about/page.js",
+  "/api/view/[slug]/route": "app/api/view/[slug]/route.js",
+  "/dashboard/new/page": "app/dashboard/new/page.js",
+  "/dashboard/edit/[slug]/page": "app/dashboard/edit/[slug]/page.js",
   "/login/page": "app/login/page.js",
-  "/dashboard/new/page": "app/dashboard/new/page.js"
+  "/dashboard/theme/page": "app/dashboard/theme/page.js",
+  "/p/[slug]/page": "app/p/[slug]/page.js",
+  "/verify/page": "app/verify/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/register/page": "app/register/page.js",
+  "/page": "app/page.js"
 }

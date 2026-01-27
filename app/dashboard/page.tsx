@@ -34,7 +34,7 @@ export default async function DashboardPage() {
                 <div>
                   <h2 className="text-lg font-medium">{post.title}</h2>
                   <p className="text-xs text-gray-500">
-                    Updated {new Date(post.updated_at).toLocaleDateString()}
+                    Published {new Date(post.published_at ?? post.created_at).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="flex items-center gap-3 text-xs">
