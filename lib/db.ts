@@ -203,7 +203,8 @@ export async function getPublicBlog() {
 }
 
 export async function getPublicPosts(blogId: string) {
-  const supabase = createSupabaseServerClient();
+  // Use the service client here to avoid any RLS edge cases on the public homepage.
+  const supabase = createSupabaseServiceClient();
   const { data, error } = await supabase
     .from("posts")
     .select("id, slug, title, published_at, created_at")
