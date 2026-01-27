@@ -22,6 +22,13 @@ create table if not exists posts (
   updated_at timestamptz default now()
 );
 
+create table if not exists post_views (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid not null references posts(id) on delete cascade,
+  blog_id uuid not null references blogs(id) on delete cascade,
+  viewed_at timestamptz not null default now()
+);
+
 create or replace function set_updated_at()
 returns trigger as $$
 begin
@@ -36,6 +43,7 @@ for each row execute procedure set_updated_at();
 
 alter table blogs enable row level security;
 alter table posts enable row level security;
+alter table post_views enable row level security;
 
 -- Blogs policies
 create policy "Blogs owner select"
@@ -90,4 +98,21 @@ create policy "Posts owner delete"
   using (exists (
     select 1 from blogs b
     where b.id = posts.blog_id and b.owner_user_id = auth.uid()
+  ));
+
+-- Post views policies
+create policy "Post views owner select"
+  on post_views for select
+  using (exists (
+    select 1 from blogs b
+    where b.id = post_views.blog_id and b.owner_user_id = auth.uid()
+  ));
+
+create policy "Post views public insert"
+  on post_views for insert
+  with check (exists (
+    select 1 from posts p
+    where p.id = post_views.post_id
+      and p.blog_id = post_views.blog_id
+      and p.visibility = 'public'
   ));

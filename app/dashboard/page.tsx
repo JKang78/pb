@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { requireOwner } from "../../lib/auth";
-import { getOwnerPosts } from "../../lib/db";
+import { getOwnerPosts, getRecentPostViews } from "../../lib/db";
 import { deletePostAction, toggleVisibilityAction } from "./actions";
 import ConfirmDeleteForm from "../../components/ConfirmDeleteForm";
 
 export default async function DashboardPage() {
   const { blog } = await requireOwner();
   const posts = await getOwnerPosts(blog.id);
+  const recentViews = await getRecentPostViews(blog.id);
 
   return (
     <section className="space-y-8">
@@ -71,6 +72,39 @@ export default async function DashboardPage() {
           ))
         )}
       </div>
+      <section className="space-y-3">
+        <header className="flex items-baseline justify-between gap-3">
+          <h2 className="text-base font-medium">Recent views</h2>
+          <p className="text-xs text-gray-500">Visible only to you.</p>
+        </header>
+        {recentViews.length === 0 ? (
+          <p className="text-sm text-gray-600">No views logged yet.</p>
+        ) : (
+          <div className="space-y-2">
+            {recentViews.map((view) => {
+              const title = view.posts?.title ?? "Deleted post";
+              const slug = view.posts?.slug;
+              return (
+                <div
+                  key={view.id}
+                  className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 pb-2 text-xs"
+                >
+                  {slug ? (
+                    <Link href={`/p/${slug}`} className="hover:opacity-80">
+                      {title}
+                    </Link>
+                  ) : (
+                    <span>{title}</span>
+                  )}
+                  <time className="text-gray-500">
+                    {new Date(view.viewed_at).toLocaleString()}
+                  </time>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
     </section>
   );
 }

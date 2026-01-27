@@ -50,6 +50,17 @@ export type Post = {
   updated_at: string;
 };
 
+export type PostViewEvent = {
+  id: string;
+  post_id: string;
+  blog_id: string;
+  viewed_at: string;
+  posts: {
+    title: string;
+    slug: string;
+  } | null;
+};
+
 function slugify(input: string) {
   const base = input
     .toLowerCase()
@@ -249,6 +260,36 @@ export async function getOwnerPosts(blogId: string) {
   }
 
   return data as Post[];
+}
+
+export async function getRecentPostViews(blogId: string, limit = 40) {
+  const supabase = createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("post_views")
+    .select("id, post_id, blog_id, viewed_at, posts(title, slug)")
+    .eq("blog_id", blogId)
+    .order("viewed_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    // If the table has not been created yet, fail softly.
+    if (error.code === "42P01" || error.code === "PGRST205") {
+      return [] as PostViewEvent[];
+    }
+    throw error;
+  }
+
+  const rows = (data ?? []) as any[];
+  return rows.map((row) => {
+    const postRelation = Array.isArray(row.posts) ? (row.posts[0] ?? null) : (row.posts ?? null);
+    return {
+      id: row.id,
+      post_id: row.post_id,
+      blog_id: row.blog_id,
+      viewed_at: row.viewed_at,
+      posts: postRelation
+    } as PostViewEvent;
+  });
 }
 
 export async function getOwnerPostBySlug(blogId: string, slug: string) {

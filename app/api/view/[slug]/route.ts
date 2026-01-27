@@ -15,7 +15,7 @@ export async function POST(
   const supabase = createSupabaseServiceClient();
   const { data: post, error } = await supabase
     .from("posts")
-    .select("id, view_count")
+    .select("id, blog_id, view_count")
     .eq("slug", params.slug)
     .eq("visibility", "public")
     .single();
@@ -28,6 +28,17 @@ export async function POST(
     .from("posts")
     .update({ view_count: post.view_count + 1 })
     .eq("id", post.id);
+
+  // Log the view event so the owner can see when views happened.
+  // This is intentionally best-effort and does not block the response.
+  const { error: viewError } = await supabase.from("post_views").insert({
+    post_id: post.id,
+    blog_id: post.blog_id
+  });
+  if (viewError) {
+    // Do not fail the request if view logging has an issue.
+    console.error("Failed to log post view", viewError);
+  }
 
   const response = NextResponse.json({ ok: true });
   response.cookies.set(cookieName, "true", {
