@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPublicPostBySlug } from "../../../lib/db";
 import ViewTracker from "../../../components/ViewTracker";
 import PostContent from "../../../components/PostContent";
+import OverthinkingPopup from "../../../components/OverthinkingPopup";
 
 export default async function PublicPostPage({
   params
@@ -16,6 +17,7 @@ export default async function PublicPostPage({
   return (
     <article className="space-y-10">
       <ViewTracker slug={post.slug} />
+      <OverthinkingPopup title={post.title} />
       <header className="space-y-3">
         <h1 className="text-[30px] leading-tight">{post.title}</h1>
         <p className="text-[12px] text-[color:var(--text)] opacity-60">
