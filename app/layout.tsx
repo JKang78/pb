@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import ThemeProvider from "../components/ThemeProvider";
 import Nav from "../components/Nav";
 import { getPublicBlog } from "../lib/db";
@@ -42,6 +43,7 @@ export default async function RootLayout({
             {children}
           </main>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
