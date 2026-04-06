@@ -29,6 +29,8 @@ npm run dev
 - Public pages only show public posts. Private posts are visible only in `/dashboard`.
 - View counts are tracked for public posts but shown only in the dashboard.
 - Theme settings are stored in `blogs.theme_json` and applied to public pages and the editor.
+- Image uploads in the editor can now be toggled between `public` and `private` before upload.
+- Private media paths require an authenticated session when accessed through `/api/media`.
 - Optional `BLOG_SLUG` lets you target a specific blog if you add more later.
 
 ## Required Env Vars

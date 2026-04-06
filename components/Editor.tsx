@@ -53,6 +53,7 @@ export default function Editor({
 }) {
   const [currentPostId, setCurrentPostId] = useState<string | null>(postId);
   const [status, setStatus] = useState<string>("");
+  const [fileVisibility, setFileVisibility] = useState<"public" | "private">("private");
   const [contentJson, setContentJson] = useState<unknown>(
     initialContent ?? { type: "doc", content: [] }
   );
@@ -131,6 +132,7 @@ export default function Editor({
     setStatus("Uploading image...");
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("visibility", fileVisibility);
 
     const response = await fetch("/api/upload", {
       method: "POST",
@@ -235,6 +237,15 @@ export default function Editor({
             }}
           />
         </label>
+        <button
+          type="button"
+          className="editor-button"
+          onClick={() =>
+            setFileVisibility((current) => (current === "public" ? "private" : "public"))
+          }
+        >
+          File: {fileVisibility}
+        </button>
         <button
           type="button"
           className="editor-button"

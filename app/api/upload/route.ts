@@ -13,13 +13,15 @@ export async function POST(request: Request) {
 
   const formData = await request.formData();
   const file = formData.get("file");
+  const visibilityInput = String(formData.get("visibility") ?? "private");
+  const visibility = visibilityInput === "public" ? "public" : "private";
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "Missing file" }, { status: 400 });
   }
 
   const fileExt = file.name.split(".").pop() || "bin";
   const fileName = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${fileExt}`;
-  const filePath = `posts/${fileName}`;
+  const filePath = `${visibility}/posts/${fileName}`;
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
   const supabase = createSupabaseServiceClient();
@@ -33,5 +35,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  return NextResponse.json({ path: filePath });
+  return NextResponse.json({ path: filePath, visibility });
 }
