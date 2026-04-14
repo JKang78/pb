@@ -28,7 +28,7 @@ export default function OverthinkingPopup({ title }: OverthinkingPopupProps) {
     <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="pointer-events-auto w-full max-w-[280px] border border-sky-200/70 bg-sky-100 px-5 py-4 text-sm text-sky-900">
         <div className="flex items-start justify-between gap-3">
-          <p className="leading-snug">Stop overthinking :)</p>
+          <p className="leading-snug">this is why I hate opening up to people</p>
           <button
             aria-label="Dismiss message"
             className="text-sky-700/80 hover:text-sky-900"
