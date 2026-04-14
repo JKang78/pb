@@ -4,11 +4,14 @@ import { createSupabaseServiceClient } from "../../../lib/supabaseServer";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const path = searchParams.get("path");
+  const rawPath = searchParams.get("path");
 
-  if (!path) {
+  if (!rawPath) {
     return NextResponse.json({ error: "Missing path" }, { status: 400 });
   }
+  const path = rawPath.startsWith("public/") || rawPath.startsWith("private/")
+    ? rawPath
+    : `public/${rawPath.replace(/^\/+/, "")}`;
   const isPublicAsset = path.startsWith("public/");
   const isPrivateAsset = path.startsWith("private/");
 
