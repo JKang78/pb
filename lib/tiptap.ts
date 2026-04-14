@@ -67,7 +67,13 @@ export function renderContent(content: unknown) {
 
 function extractStoragePath(src: string) {
   if (src.startsWith("/api/media?path=")) {
-    return null;
+    try {
+      const url = new URL(src, "http://local");
+      const mediaPath = url.searchParams.get("path");
+      return mediaPath ? decodeURIComponent(mediaPath) : null;
+    } catch {
+      return null;
+    }
   }
   try {
     const url = new URL(src, "http://local");
