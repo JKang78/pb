@@ -12,6 +12,12 @@ export default function PinPage() {
           aria-label="PIN"
           className="w-64 border border-black px-4 py-3 text-center text-lg tracking-[0.3em] outline-none"
         />
+        <button
+          type="submit"
+          className="mt-3 w-full border border-black px-4 py-3 text-center text-sm font-medium uppercase tracking-[0.2em]"
+        >
+          Enter
+        </button>
       </form>
     </div>
   );
